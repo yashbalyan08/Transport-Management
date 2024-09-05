@@ -8,6 +8,6 @@ import (
 func Router() *mux.Router {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/login", middleware.CheckLogin).Methods("GET")
+	r.HandleFunc("/login", middleware.CheckLogin).Methods("POST")
 	return r
 }

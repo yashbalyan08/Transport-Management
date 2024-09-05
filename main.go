@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	//os.Setenv("MYSQL_PASSWORD", "mallusethono.8")
 	fmt.Println("Backend")
 	r := routers.Router()
 	fmt.Println("Sever is starting...")

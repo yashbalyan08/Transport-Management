@@ -8,9 +8,9 @@ import (
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/gorilla/mux"
 
 	database "github.com/yashbalyan08/system/config"
+	user "github.com/yashbalyan08/system/models"
 )
 
 func checkNilErr(err error) {
@@ -22,31 +22,35 @@ func checkNilErr(err error) {
 
 var db *sql.DB = database.GetDB()
 
-func checkLogin(params map[string]string) bool {
+func checkLogin(user user.User) bool {
+
 	query := "select password from users where id = ?"
 	result, err := db.Prepare(query)
 	checkNilErr(err)
 
-	defer result.Close()
-
+	// defer result.Close()
 	var pass string
-	err = result.QueryRow(params["id"]).Scan(&pass)
+	err = result.QueryRow(user.Id).Scan(&pass)
 
 	checkNilErr(err)
 
-	return pass == params["pass"]
+	return pass == user.Password
 }
 
 func CheckLogin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencode")
-	w.Header().Set("Allow-Control-Allow-Methods", "GET")
+	w.Header().Set("Allow-Control-Allow-Methods", "POST")
 
-	params := mux.Vars(r)
+	var user user.User
 
-	if checkLogin(params) {
+	json.NewDecoder(r.Body).Decode(&user)
+	fmt.Printf("Check params: %v\n", user)
+
+	if checkLogin(user) {
 		json.NewEncoder(w).Encode("Logged in successful")
 		return
 	} else {
 		json.NewEncoder(w).Encode("Not Logged in")
 	}
+	db.Close()
 }

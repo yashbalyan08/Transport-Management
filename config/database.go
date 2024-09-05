@@ -1,7 +1,6 @@
 package db
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 	"log"
@@ -21,12 +20,14 @@ func checkNilErr(err error) {
 	}
 }
 
-func dbConnect(ctx context.Context) {
+func init() {
+	// pass := os.Getenv("MYSQL_PASSWORD")
+	// fmt.Println(pass)
 	cfg := mysql.Config{
 		User:   "root",
 		Passwd: "mallusethno.8",
 		Net:    "tcp",
-		Addr:   "127.0.0.1:3306",
+		Addr:   "localhost:3306",
 		DBName: "transport",
 	}
 	var err error
@@ -43,12 +44,6 @@ func dbConnect(ctx context.Context) {
 	fmt.Println("The server is connected")
 }
 
-func init() {
-	ctx := context.TODO()
-	dbConnect(ctx)
-}
-
 func GetDB() *sql.DB {
-	defer db.Close()
 	return db
 }
