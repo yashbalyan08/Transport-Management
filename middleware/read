@@ -1,0 +1,1 @@
+the middleware checks and if true moves to controller or back with error - 401 unauthorized
