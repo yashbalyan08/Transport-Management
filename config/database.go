@@ -4,15 +4,15 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-//const connectionString string = "root:mallusethno.8@/transport"
-
 var db *sql.DB
+var MYSQL_PASSWORD string = os.Getenv("MYSQL")
 
 func checkNilErr(err error) {
 	if err != nil {
@@ -25,7 +25,7 @@ func init() {
 	// fmt.Println(pass)
 	cfg := mysql.Config{
 		User:   "root",
-		Passwd: "mallusethno.8",
+		Passwd: MYSQL_PASSWORD,
 		Net:    "tcp",
 		Addr:   "localhost:3306",
 		DBName: "transport",
