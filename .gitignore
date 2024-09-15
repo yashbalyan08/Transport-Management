@@ -5,6 +5,8 @@
 *.so
 *.dylib
 *.test
+#my info
+Transport-Management/middleware/read
 
 # Go binary and build directories
 /bin/
