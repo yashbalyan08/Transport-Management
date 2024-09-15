@@ -6,7 +6,7 @@
 *.dylib
 *.test
 #my info
-Transport-Management/middleware/read
+/Users/yashbalyan/yashbalyan08/transport/Transport-Management/middleware/read
 
 # Go binary and build directories
 /bin/
